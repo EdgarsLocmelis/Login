@@ -1,10 +1,12 @@
 package com.example.login.features.auth.domain.validator.email
 
+import android.util.Patterns
 import com.example.login.features.auth.domain.validator.IValidator
+import java.util.regex.Pattern
 
-class EmailValidator : IValidator<String> {
+class EmailValidator(private val emailPattern: Pattern = Patterns.EMAIL_ADDRESS) : IValidator<String> {
     override fun validate(input: String): Boolean {
-        return android.util.Patterns.EMAIL_ADDRESS.matcher(input).matches()
+        return emailPattern.matcher(input).matches()
     }
 
     override fun getErrorMessage(input: String): EmailError {

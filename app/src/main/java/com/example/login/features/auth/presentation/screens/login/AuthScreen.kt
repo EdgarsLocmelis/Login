@@ -40,9 +40,8 @@ fun AuthScreen(
     val context = LocalContext.current
     val scrollState = rememberScrollState()
 
-    // Ignore back press on auth screen
     BackHandler(enabled = true) {
-        // Do nothing, effectively ignoring the back press
+        // Do nothing
     }
 
     LaunchedEffect(authFormState) {

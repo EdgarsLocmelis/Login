@@ -6,7 +6,9 @@ class PasswordValidator: IValidator<String> {
     override fun validate(input: String): Boolean {
         return input.length >= 8 &&
                 input.any { it.isDigit() } &&
-                input.any { it.isUpperCase() }
+                input.any { it.isUpperCase() } &&
+                input.any { it.isLowerCase() }
+
     }
 
     override fun getErrorMessage(input: String): PasswordError {
@@ -14,7 +16,7 @@ class PasswordValidator: IValidator<String> {
             PasswordError.EmptyPassword
         } else if (input.length < 8) {
             PasswordError.PasswordTooShort
-        } else if (!input.any { it.isDigit() } || !input.any { it.isUpperCase() }) {
+        } else if (!input.any { it.isDigit() } || !input.any { it.isUpperCase() } || !input.any { it.isLowerCase() }) {
             PasswordError.PasswordTooWeak
         } else {
             PasswordError.WrongPassword

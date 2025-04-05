@@ -37,7 +37,6 @@ fun HomeScreen(
     val data = remember { mutableStateOf("") }
     val context = LocalContext.current
 
-    // Close app on back press
     BackHandler(enabled = true) {
         (context as? Activity)?.finish()
     }
