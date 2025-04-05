@@ -1,3 +1,23 @@
 <resources>
-    <string name="app_name">login</string>
+    <string name="app_name">Login</string>
+    <string name="err_account_not_found">Account not found for this email</string>
+    <string name="invalid_credentials">Invalid credentials</string>
+    <string name="unexpected_error">Unexpected error</string>
+    <string name="invalid_email">Invalid email</string>
+    <string name="user_exists">User is already registered</string>
+    <string name="login">Log in</string>
+    <string name="or">or</string>
+    <string name="register">Register</string>
+    <string name="invalid_password">Password must be at least 8 characters and contain at least one number and one uppercase letter</string>
+    <string name="home_screen_welcome">"Welcome %s!</string>
+    <string name="error_message">Error: %s</string>
+    <string name="logout">Log out</string>
+    <string name="empty_email">Email cannot be empty</string>
+    <string name="already_registered">This email is already registered</string>
+    <string name="empty_password">Password cannot be empty</string>
+    <string name="password_too_short">Password must be at least 8 characters</string>
+    <string name="password_too_weak">Password must include uppercase, lowercase, and numbers</string>
+    <string name="password">Password</string>
+    <string name="l_email">E-mail</string>
+    <string name="l_authentication">Authentication</string>
 </resources>

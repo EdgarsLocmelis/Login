@@ -1,0 +1,111 @@
+package com.example.login.core.presentation.components
+
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.expandVertically
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
+import androidx.compose.animation.shrinkVertically
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.heightIn
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.OutlinedTextField
+import androidx.compose.material3.Text
+import androidx.compose.material3.TextFieldDefaults
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalDensity
+import androidx.compose.ui.text.input.ImeAction
+import androidx.compose.ui.text.input.VisualTransformation
+import androidx.compose.ui.tooling.preview.PreviewFontScale
+import androidx.compose.ui.unit.dp
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun InputField(
+    value: String,
+    onValueChange: (String) -> Unit,
+    label: String,
+    enabled: Boolean = true,
+    errorMessage: String? = null,
+    visualTransformation: VisualTransformation,
+    modifier: Modifier = Modifier
+) {
+    val density = LocalDensity.current
+
+    Column(
+        modifier = modifier.fillMaxWidth()
+    ) {
+        OutlinedTextField(
+            value = value,
+            onValueChange = onValueChange,
+            label = { Text(label) },
+            visualTransformation = visualTransformation,
+            isError = errorMessage != null,
+            colors = TextFieldDefaults.outlinedTextFieldColors(
+                unfocusedBorderColor = Color.LightGray
+            ),
+            enabled = enabled,
+            modifier = Modifier
+                .fillMaxWidth()
+                .heightIn(56.dp),
+            textStyle = MaterialTheme.typography.bodyLarge,
+            keyboardOptions = KeyboardOptions(imeAction = ImeAction.Done),
+            shape = MaterialTheme.shapes.small
+        )
+
+        Column (
+            modifier = Modifier
+                .fillMaxWidth()
+                .heightIn(min = 24.dp)
+        ) {
+                AnimatedVisibility(
+                    visible = errorMessage != null,
+                    enter = fadeIn() + expandVertically(),
+                    exit = fadeOut() + shrinkVertically()
+                ) {
+                    Text(
+                        text = errorMessage ?: "",
+                        color = MaterialTheme.colorScheme.error,
+                        style = MaterialTheme.typography.bodySmall,
+                        modifier = Modifier.padding(start = 8.dp, top = 4.dp, end = 8.dp)
+                    )
+                }
+
+        }
+    }
+}
+
+@PreviewFontScale
+@Composable
+fun InputFieldPreview() {
+    PreviewWrapper {
+        InputField(
+            value = "",
+            onValueChange = {},
+            label = "Label",
+            enabled = true,
+            errorMessage = null,
+            visualTransformation = VisualTransformation.None
+        )
+    }
+}
+
+@PreviewFontScale
+@Composable
+fun InputFieldErrorPreview() {
+    PreviewWrapper {
+        InputField(
+            value = "",
+            onValueChange = {},
+            label = "Label",
+            enabled = true,
+            errorMessage = "Error message",
+            visualTransformation = VisualTransformation.None
+        )
+    }
+}
