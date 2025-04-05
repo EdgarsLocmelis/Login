@@ -1,5 +1,6 @@
 package com.example.login.features.home.presentation.screens
 
+import android.app.Activity
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -19,6 +20,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.PreviewFontScale
 import androidx.compose.ui.unit.dp
+import androidx.activity.compose.BackHandler
 import com.example.login.R
 import com.example.login.core.presentation.components.LoadingIndicator
 import com.example.login.core.presentation.components.MainButton
@@ -34,6 +36,11 @@ fun HomeScreen(
 ) {
     val data = remember { mutableStateOf("") }
     val context = LocalContext.current
+
+    // Close app on back press
+    BackHandler(enabled = true) {
+        (context as? Activity)?.finish()
+    }
 
     LaunchedEffect(userState) {
         when (userState) {

@@ -18,6 +18,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewFontScale
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.activity.compose.BackHandler
 import com.example.login.R
 import com.example.login.core.presentation.components.InputField
 import com.example.login.core.presentation.components.LoadingIndicator
@@ -38,6 +39,11 @@ fun AuthScreen(
     var password by remember { mutableStateOf("") }
     val context = LocalContext.current
     val scrollState = rememberScrollState()
+
+    // Ignore back press on auth screen
+    BackHandler(enabled = true) {
+        // Do nothing, effectively ignoring the back press
+    }
 
     LaunchedEffect(authFormState) {
         if (authFormState.isAuthorized) {
