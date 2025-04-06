@@ -70,6 +70,24 @@ This application follows Clean Architecture principles with a clear separation o
 - Password strength requirements
 - User-friendly error messages
 
+### Testing Levels
+
+1. **Unit Tests**
+   - Located in `app/src/test/`
+   - Test individual components in isolation
+   - Use JUnit and MockK for mocking dependencies
+   - Example: `EmailValidatorTest`, `PasswordValidatorTest`
+
+2. **UI Tests**
+   - Not a big fan of UI tests and did not want to add some LLM generated ones that I could not fully understand and describe, partially covered by Screenshot testing.
+
+3. **Screenshot Tests**
+   - Located in `app/src/screenshotTest/`
+   - Verify visual appearance of UI components
+   - Use Android Compose Screenshot testing library
+   - Example: `AuthScreenScreenshotTest`
+
+
 ## Security Considerations
 
 ### Current Implementation Limitations
