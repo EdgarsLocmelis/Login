@@ -13,12 +13,4 @@ class UserMapper @Inject constructor() {
             password = entity.password
         )
     }
-
-    fun mapDomainToEntity(user: User): UserEntity {
-        return UserEntity(
-            id = user.id,
-            email = user.email,
-            password = user.password
-        )
-    }
 }

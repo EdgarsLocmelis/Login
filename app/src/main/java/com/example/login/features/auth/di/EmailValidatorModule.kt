@@ -2,13 +2,15 @@ package com.example.login.features.auth.di
 
 import com.example.login.features.auth.domain.validator.IValidator
 import com.example.login.features.auth.domain.validator.email.EmailValidator
-import com.example.login.features.auth.domain.validator.password.PasswordValidator
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import javax.inject.Singleton
 
+/**
+ * Module for providing the Email Validator.
+ */
 @Module
 @InstallIn(SingletonComponent::class)
 object EmailValidatorModule {

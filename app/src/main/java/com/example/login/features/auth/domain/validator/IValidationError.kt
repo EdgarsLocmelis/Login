@@ -1,4 +1,6 @@
 package com.example.login.features.auth.domain.validator
 
-interface IValidationError {
-}
+/**
+ * Interface for validation errors that each validator can return.
+ */
+interface IValidationError

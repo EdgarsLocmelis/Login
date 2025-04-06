@@ -12,6 +12,9 @@ import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
 import javax.inject.Inject
 
+/**
+ * Implementation of the User Repository interface.
+ */
 class UserRepositoryImpl @Inject constructor(
     private val userDao: UserDao,
     private val userMapper: UserMapper

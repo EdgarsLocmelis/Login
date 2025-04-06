@@ -5,6 +5,9 @@ import com.example.login.features.auth.domain.repository.IAuthRepository
 import kotlinx.coroutines.flow.firstOrNull
 import javax.inject.Inject
 
+/**
+ * Implementation of the Auth Repository interface.
+ */
 class AuthRepositoryImpl @Inject constructor(
     private val userdataStoreManager: UserDataStoreManager,
 ): IAuthRepository {

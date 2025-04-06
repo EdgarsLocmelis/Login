@@ -8,6 +8,9 @@ import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import javax.inject.Singleton
 
+/**
+ * Module for providing the Password Validator.
+ */
 @Module
 @InstallIn(SingletonComponent::class)
 object PasswordValidatorModule {

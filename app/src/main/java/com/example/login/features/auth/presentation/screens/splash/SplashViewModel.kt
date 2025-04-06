@@ -44,7 +44,7 @@ class SplashViewModel @Inject constructor(
                                 userManager.setUser(null)
                                 _userUiState.value = UiState.Error("Not logged in")
                             } else {
-                                Timber.d("User authenticated: ${result.data?.email}")
+                                Timber.d("User authenticated: ${result.data.email}")
                                 userManager.setUser(result.data)
                                 _userUiState.value = UiState.Success(result.data)
                             }
