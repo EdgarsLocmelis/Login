@@ -17,7 +17,6 @@ import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.tooling.preview.PreviewFontScale
 import androidx.compose.ui.unit.dp
@@ -44,7 +43,13 @@ fun InputField(
             visualTransformation = visualTransformation,
             isError = errorMessage != null,
             colors = OutlinedTextFieldDefaults.colors(
-                unfocusedBorderColor = Color.LightGray,
+                unfocusedBorderColor = MaterialTheme.colorScheme.primaryContainer,
+                focusedBorderColor = MaterialTheme.colorScheme.onPrimary,
+                focusedTextColor = MaterialTheme.colorScheme.onPrimary,
+                cursorColor = MaterialTheme.colorScheme.onPrimary,
+                focusedLabelColor = MaterialTheme.colorScheme.onPrimary,
+                unfocusedTextColor = MaterialTheme.colorScheme.onPrimaryContainer,
+
             ),
             enabled = enabled,
             modifier = Modifier

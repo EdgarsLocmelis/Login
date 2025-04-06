@@ -16,16 +16,20 @@ import androidx.compose.ui.unit.dp
 
 private val DarkColorScheme = darkColorScheme(
     primary = Color.Black,
+    onPrimary = Color.White,
     secondary = LoginBlue,
     outlineVariant = LoginGray,
-    tertiary = Pink40
+    primaryContainer = FieldBorderColor,
+    onPrimaryContainer = FieldTextColor
 )
 
 private val LightColorScheme = lightColorScheme(
     primary = Color.Black,
+    onPrimary = Color.Black,
     secondary = LoginBlue,
     outlineVariant = LoginGray,
-    tertiary = Pink40
+    primaryContainer = FieldBorderColor,
+    onPrimaryContainer = FieldTextColor
 )
 
 @Composable

@@ -4,4 +4,5 @@ import androidx.compose.ui.graphics.Color
 
 val LoginGray = Color(0xFF70787C)
 val LoginBlue = Color(0xFF89CFDF)
-val Pink40 = Color(0xFF7D5260)
+val FieldBorderColor = Color(0xFF79747E)
+val FieldTextColor = Color(0xFF49454F)
