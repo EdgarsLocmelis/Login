@@ -14,9 +14,9 @@ fun BlankAuthScreenPreview() {
             authFormState = AuthViewModel.AuthFormState(),
             onEmailChanged = {},
             onPasswordChanged = {},
-            login = { _, _ -> },
-            signUp = { _, _ -> },
-            onSuccess = {}
+            login = { },
+            signUp = { },
+            onSuccess = { }
         )
     }
 }
@@ -31,9 +31,9 @@ fun ErrorEmailAuthScreenPreview() {
             ),
             onEmailChanged = {},
             onPasswordChanged = {},
-            login = { _, _ -> },
-            signUp = { _, _ -> },
-            onSuccess = {}
+            login = { },
+            signUp = { },
+            onSuccess = { }
         )
     }
 }
@@ -48,9 +48,9 @@ fun ErrorPasswordAuthScreenPreview() {
             ),
             onEmailChanged = {},
             onPasswordChanged = {},
-            login = { _, _ -> },
-            signUp = { _, _ -> },
-            onSuccess = {}
+            login = { },
+            signUp = { },
+            onSuccess = { }
         )
     }
 }
@@ -66,9 +66,9 @@ fun ErrorUiAuthScreenPreview() {
             ),
             onEmailChanged = {},
             onPasswordChanged = {},
-            login = { _, _ -> },
-            signUp = { _, _ -> },
-            onSuccess = {}
+            login = { },
+            signUp = { },
+            onSuccess = { }
         )
     }
 }

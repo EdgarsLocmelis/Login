@@ -30,26 +30,33 @@ class AuthViewModel @Inject constructor(
     val authFormState = _authFormState.asStateFlow()
 
     data class AuthFormState(
+        val email: String = "",
         val emailError: String? = null,
+        val password: String = "",
         val passwordError: String? = null,
         val isSubmitting: Boolean = false,
         val isAuthorized: Boolean = false,
     )
 
-    fun resetAuthState() {
-        _authFormState.value = AuthFormState()
+    fun resetFieldErrors() {
+        _authFormState.value = _authFormState.value.copy(
+            emailError = null,
+            passwordError = null,
+        )
     }
 
-    fun login(email: String, password: String) {
-        Timber.d("Attempting login for email: $email")
-        resetAuthState()
+    fun login() {
+        Timber.d("Attempting login for email: ${authFormState.value.email}")
+
+        resetFieldErrors()
+
         viewModelScope.launch {
             _authFormState.value = _authFormState.value.copy(
                 isSubmitting = true
             )
 
             IoProcessingUtils.withMinimumProcessingTime {
-                loginUserUseCase(email, password)
+                loginUserUseCase(authFormState.value.email, authFormState.value.password)
             }.collect { result ->
                 when (result) {
                     is AuthResult.Loading -> {
@@ -60,6 +67,7 @@ class AuthViewModel @Inject constructor(
 
                     is AuthResult.Success -> {
                         _authFormState.value = _authFormState.value.copy(
+                            // Keep submitting state
                             isAuthorized = true
                         )
                         userManager.setUser(result.data)
@@ -93,7 +101,7 @@ class AuthViewModel @Inject constructor(
                                 Timber.e("Unexpected error: $result")
                                 _authFormState.value = _authFormState.value.copy(
                                     isSubmitting = false,
-                                    emailError = "",
+                                    emailError = "", // Specific case to mark field red wo error, because general error is shown under password field 
                                     passwordError = context.getString(GeneralError.UnexpectedError.messageResId)
                                 )
                             }
@@ -104,9 +112,11 @@ class AuthViewModel @Inject constructor(
         }
     }
 
-    fun signUp(email: String, password: String) {
-        Timber.d("Attempting signup for email: $email")
-        resetAuthState()
+    fun signUp() {
+        Timber.d("Attempting signup for email: ${authFormState.value.email}")
+
+        resetFieldErrors()
+
         viewModelScope.launch {
             _authFormState.value = _authFormState.value.copy(
                 isSubmitting = true
@@ -114,8 +124,8 @@ class AuthViewModel @Inject constructor(
 
             IoProcessingUtils.withMinimumProcessingTime {
                 signUpUserUseCase.invoke(
-                    email,
-                    password
+                    authFormState.value.email,
+                    authFormState.value.password
                 )
             }.collect { result ->
                 when (result) {
@@ -127,6 +137,7 @@ class AuthViewModel @Inject constructor(
 
                     is AuthResult.Success -> {
                         _authFormState.value = _authFormState.value.copy(
+                            // Keep submitting state
                             isAuthorized = true
                         )
                         userManager.setUser(result.data)
@@ -160,7 +171,7 @@ class AuthViewModel @Inject constructor(
                                 Timber.e("Unexpected error: $result")
                                 _authFormState.value = _authFormState.value.copy(
                                     isSubmitting = false,
-                                    emailError = "",
+                                    emailError = "", // Specific case to mark field red wo error, because general error is shown under password field
                                     passwordError = context.getString(GeneralError.UnexpectedError.messageResId)
                                 )
                             }
@@ -169,5 +180,21 @@ class AuthViewModel @Inject constructor(
                 }
             }
         }
+    }
+
+    fun onEmailChanged(data: String) {
+        resetFieldErrors()
+
+        _authFormState.value = _authFormState.value.copy(
+            email = data
+        )
+    }
+
+    fun onPasswordChanged(data: String) {
+        resetFieldErrors()
+
+        _authFormState.value = _authFormState.value.copy(
+            password = data
+        )
     }
 }

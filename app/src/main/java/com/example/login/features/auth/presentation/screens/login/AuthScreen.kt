@@ -10,14 +10,20 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.focus.FocusRequester
+import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.input.ImeAction
+import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.activity.compose.BackHandler
+import androidx.compose.foundation.text.KeyboardActions
+import androidx.compose.foundation.text.KeyboardOptions
 import com.example.login.R
 import com.example.login.core.presentation.components.InputField
 import com.example.login.core.presentation.components.LoadingIndicator
@@ -30,14 +36,14 @@ fun AuthScreen(
     authFormState: AuthViewModel.AuthFormState,
     onEmailChanged: (String) -> Unit,
     onPasswordChanged: (String) -> Unit,
-    login: (String, String) -> Unit,
-    signUp: (String, String) -> Unit,
+    login: () -> Unit,
+    signUp: () -> Unit,
     onSuccess: (String) -> Unit,
 ) {
-    var email by remember { mutableStateOf("") }
-    var password by remember { mutableStateOf("") }
     val context = LocalContext.current
     val scrollState = rememberScrollState()
+    
+    val passwordFocusRequester = remember { FocusRequester() }
 
     BackHandler(enabled = true) {
         // Do nothing
@@ -65,6 +71,7 @@ fun AuthScreen(
                     .fillMaxWidth()
                     .verticalScroll(scrollState)
                     .padding(horizontal = 16.dp, vertical = 24.dp)
+                    .imePadding()
             ) {
                 Box(
                     modifier = Modifier
@@ -89,27 +96,40 @@ fun AuthScreen(
                 Spacer(modifier = Modifier.height(32.dp))
 
                 InputField(
-                    value = email,
+                    value = authFormState.email,
                     onValueChange = {
-                        email = it
-                        onEmailChanged(email)
+                        onEmailChanged(it)
                     },
                     label = context.getString(R.string.l_email),
                     enabled = !authFormState.isSubmitting,
                     errorMessage = authFormState.emailError,
-                    visualTransformation = VisualTransformation.None
+                    visualTransformation = VisualTransformation.None,
+                    keyboardOptions = KeyboardOptions(
+                        keyboardType = KeyboardType.Email,
+                        imeAction = ImeAction.Next
+                    ),
+                    keyboardActions = KeyboardActions(
+                        onNext = { passwordFocusRequester.requestFocus() }
+                    )
                 )
 
                 InputField(
-                    value = password,
+                    value = authFormState.password,
                     onValueChange = {
-                        password = it
-                        onPasswordChanged(password)
+                        onPasswordChanged(it)
                     },
                     label = context.getString(R.string.password),
                     enabled = !authFormState.isSubmitting,
                     errorMessage = authFormState.passwordError,
-                    visualTransformation = PasswordVisualTransformation()
+                    visualTransformation = PasswordVisualTransformation(),
+                    modifier = Modifier.focusRequester(passwordFocusRequester),
+                    keyboardOptions = KeyboardOptions(
+                        keyboardType = KeyboardType.Password,
+                        imeAction = ImeAction.Done
+                    ),
+                    keyboardActions = KeyboardActions(
+                        onDone = { login() }
+                    )
                 )
 
                 Spacer(modifier = Modifier.height(16.dp))
@@ -117,7 +137,7 @@ fun AuthScreen(
                 MainButton(
                     text = context.getString(R.string.login),
                     enabled = !authFormState.isSubmitting,
-                    onClick = { login(email, password) }
+                    onClick = { login() }
                 )
 
                 Spacer(modifier = Modifier.height(16.dp))
@@ -150,7 +170,7 @@ fun AuthScreen(
                     text = context.getString(R.string.register),
                     enabled = !authFormState.isSubmitting,
                     color = MaterialTheme.colorScheme.secondary,
-                    onClick = { signUp(email, password) }
+                    onClick = { signUp() }
                 )
             }
 
@@ -167,9 +187,9 @@ fun BlankAuthScreenPreview() {
             authFormState = AuthViewModel.AuthFormState(),
             onEmailChanged = {},
             onPasswordChanged = {},
-            login = { _, _ -> },
-            signUp = { _, _ -> },
-            onSuccess = {}
+            login = { },
+            signUp = { },
+            onSuccess = { }
         )
     }
 }
@@ -184,9 +204,9 @@ fun ErrorEmailAuthScreenPreview() {
             ),
             onEmailChanged = {},
             onPasswordChanged = {},
-            login = { _, _ -> },
-            signUp = { _, _ -> },
-            onSuccess = {}
+            login = { },
+            signUp = { },
+            onSuccess = { }
         )
     }
 }
@@ -201,9 +221,9 @@ fun ErrorPasswordAuthScreenPreview() {
             ),
             onEmailChanged = {},
             onPasswordChanged = {},
-            login = { _, _ -> },
-            signUp = { _, _ -> },
-            onSuccess = {}
+            login = { },
+            signUp = { },
+            onSuccess = { }
         )
     }
 }
@@ -219,9 +239,9 @@ fun ErrorUiAuthScreenPreview() {
             ),
             onEmailChanged = {},
             onPasswordChanged = {},
-            login = { _, _ -> },
-            signUp = { _, _ -> },
-            onSuccess = {}
+            login = { },
+            signUp = { },
+            onSuccess = { }
         )
     }
 }

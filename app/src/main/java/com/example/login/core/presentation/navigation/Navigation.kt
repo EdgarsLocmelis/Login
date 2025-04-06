@@ -50,15 +50,9 @@ fun Navigation() {
 
                 AuthScreen(
                     authFormState = authFormState,
-                    onEmailChanged = {
-                        viewModel.resetAuthState()
-                    },
-                    onPasswordChanged = {
-                        viewModel.resetAuthState()
-                    },
-                    login = { email, password ->
-                        viewModel.login(email, password)
-                    },
+                    onEmailChanged = viewModel::onEmailChanged,
+                    onPasswordChanged = viewModel::onPasswordChanged,
+                    login = viewModel::login,
                     signUp = viewModel::signUp,
                     onSuccess = {
                         navHostController.navigate(Destinations.HomeScreen())

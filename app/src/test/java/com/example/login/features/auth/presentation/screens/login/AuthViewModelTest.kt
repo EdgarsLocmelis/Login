@@ -57,7 +57,9 @@ class AuthViewModelTest {
         val user = User(1, email, password)
         coEvery { loginUserUseCase(email, password) } returns flowOf(AuthResult.Success(user))
 
-        viewModel.login(email, password)
+        viewModel.onEmailChanged(email)
+        viewModel.onPasswordChanged(password)
+        viewModel.login()
         testDispatcher.scheduler.advanceUntilIdle()
 
         val state = viewModel.authFormState.value
@@ -77,7 +79,9 @@ class AuthViewModelTest {
         )
         coEvery { context.getString(EmailError.InvalidEmailFormat.messageResId) } returns "Invalid email"
 
-        viewModel.login(email, password)
+        viewModel.onEmailChanged(email)
+        viewModel.onPasswordChanged(password)
+        viewModel.login()
         testDispatcher.scheduler.advanceUntilIdle()
 
         val state = viewModel.authFormState.value
@@ -96,7 +100,9 @@ class AuthViewModelTest {
         )
         coEvery { context.getString(PasswordError.PasswordTooShort.messageResId) } returns "Password too short"
 
-        viewModel.login(email, password)
+        viewModel.onEmailChanged(email)
+        viewModel.onPasswordChanged(password)
+        viewModel.login()
         testDispatcher.scheduler.advanceUntilIdle()
 
         val state = viewModel.authFormState.value
@@ -113,7 +119,9 @@ class AuthViewModelTest {
         val user = User(1, email, password)
         coEvery { signUpUserUseCase(email, password) } returns flowOf(AuthResult.Success(user))
 
-        viewModel.signUp(email, password)
+        viewModel.onEmailChanged(email)
+        viewModel.onPasswordChanged(password)
+        viewModel.signUp()
         testDispatcher.scheduler.advanceUntilIdle()
 
         val state = viewModel.authFormState.value
@@ -133,7 +141,9 @@ class AuthViewModelTest {
         )
         coEvery { context.getString(GeneralError.UnexpectedError.messageResId) } returns "Unexpected error"
 
-        viewModel.signUp(email, password)
+        viewModel.onEmailChanged(email)
+        viewModel.onPasswordChanged(password)
+        viewModel.signUp()
         testDispatcher.scheduler.advanceUntilIdle()
 
         val state = viewModel.authFormState.value
@@ -144,7 +154,7 @@ class AuthViewModelTest {
     }
 
     @Test
-    fun `resetAuthState clears all errors and flags`() = runTest {
+    fun `resetFieldErrors clears all errors and flags`() = runTest {
         val email = "test@example.com"
         val password = "password123"
         coEvery { loginUserUseCase(email, password) } returns flowOf(
@@ -152,9 +162,11 @@ class AuthViewModelTest {
         )
         coEvery { context.getString(EmailError.InvalidEmailFormat.messageResId) } returns "Invalid email"
 
-        viewModel.login(email, password)
+        viewModel.onEmailChanged(email)
+        viewModel.onPasswordChanged(password)
+        viewModel.login()
         testDispatcher.scheduler.advanceUntilIdle()
-        viewModel.resetAuthState()
+        viewModel.resetFieldErrors()
 
         val state = viewModel.authFormState.value
         assertFalse(state.isAuthorized)
