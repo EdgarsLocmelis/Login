@@ -177,21 +177,6 @@ fun BlankAuthScreenPreview() {
 
 @Preview(showBackground = true)
 @Composable
-fun ErrorUiAuthScreenPreview() {
-    PreviewWrapper {
-        AuthScreen(
-            authFormState = AuthViewModel.AuthFormState(),
-            onEmailChanged = {},
-            onPasswordChanged = {},
-            login = { _, _ -> },
-            signUp = { _, _ -> },
-            onSuccess = {}
-        )
-    }
-}
-
-@Preview(showBackground = true)
-@Composable
 fun ErrorEmailAuthScreenPreview() {
     PreviewWrapper {
         AuthScreen(
@@ -207,12 +192,30 @@ fun ErrorEmailAuthScreenPreview() {
     }
 }
 
-@PreviewFontScale
+@Preview(showBackground = true)
 @Composable
 fun ErrorPasswordAuthScreenPreview() {
     PreviewWrapper {
         AuthScreen(
             authFormState = AuthViewModel.AuthFormState(
+                passwordError = "Error text"
+            ),
+            onEmailChanged = {},
+            onPasswordChanged = {},
+            login = { _, _ -> },
+            signUp = { _, _ -> },
+            onSuccess = {}
+        )
+    }
+}
+
+@Preview(showBackground = true)
+@Composable
+fun ErrorUiAuthScreenPreview() {
+    PreviewWrapper {
+        AuthScreen(
+            authFormState = AuthViewModel.AuthFormState(
+                emailError = "",
                 passwordError = "Error text"
             ),
             onEmailChanged = {},

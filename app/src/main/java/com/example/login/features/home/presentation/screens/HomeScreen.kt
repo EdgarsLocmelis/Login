@@ -21,6 +21,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.PreviewFontScale
 import androidx.compose.ui.unit.dp
 import androidx.activity.compose.BackHandler
+import androidx.compose.ui.tooling.preview.Preview
 import com.example.login.R
 import com.example.login.core.presentation.components.LoadingIndicator
 import com.example.login.core.presentation.components.MainButton
@@ -87,12 +88,12 @@ fun HomeScreen(
     LoadingIndicator(visible = userState is UiState.Loading)
 }
 
-@PreviewFontScale
+@Preview
 @Composable
 fun HomeScreenPreview() {
     PreviewWrapper {
         HomeScreen(
-            userState = UiState.Success(User(0, "John@doe.test", "Doe")),
+            userState = UiState.Success(User(0, "John@doe.test", "Passworrd@123")),
             onLogout = {}
         )
     }

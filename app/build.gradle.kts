@@ -6,6 +6,8 @@ plugins {
     alias(libs.plugins.kotlin.kapt)
     alias(libs.plugins.hilt)
     alias(libs.plugins.kotlin.serialization)
+
+    alias(libs.plugins.screenshot)
 }
 
 android {
@@ -42,7 +44,7 @@ android {
         compose = true
         buildConfig = true
     }
-    
+
     packaging {
         resources {
             excludes += "/META-INF/{AL2.0,LGPL2.1}"
@@ -54,6 +56,8 @@ android {
             excludes += "META-INF/NOTICE.md"
         }
     }
+
+    experimentalProperties["android.experimental.enableScreenshotTest"] = true
 }
 
 dependencies {
@@ -101,12 +105,15 @@ dependencies {
     testImplementation(libs.mockk.core)
     androidTestImplementation(libs.mockk.android)
     testImplementation(libs.coroutines.test)
-    testImplementation("org.jetbrains.kotlin:kotlin-test")
-    testImplementation("org.jetbrains.kotlin:kotlin-test-junit")
+    testImplementation(libs.kotlin.test)
+    testImplementation(libs.kotlin.test.junit)
 
     debugImplementation(libs.androidx.ui.test.manifest)
 
     // Hilt testing
     androidTestImplementation(libs.hilt.android.testing)
     kaptAndroidTest(libs.hilt.android.compiler)
+
+    screenshotTestImplementation(libs.androidx.ui.tooling)
+    screenshotTestImplementation(libs.androidx.compose.ui.tooling)
 }
